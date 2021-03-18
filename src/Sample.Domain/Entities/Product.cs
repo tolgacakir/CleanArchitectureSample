@@ -11,25 +11,27 @@ namespace Sample.Domain.Entities
     public class Product : AuditableEntity<Guid>
     {
         public string Name { get; set; }
-        public uint Quantity { get; set; }
+        public uint QuantityPerUnit { get; set; }
 
-        private double _price;
-        public double Price
+        private double _unitPrice;
+        public double UnitPrice
         {
-            get => _price;
+            get => _unitPrice;
 
-            set => _price = (value < 0)
+            set => _unitPrice = (value < 0)
                 ? throw new PriceCannotBeNegativeException()
                 : value;
         }
-        private int _stock;
-        public int Stock
+        private int _unitsInStock;
+        public int UnitsInStock
         {
-            get => _stock;
+            get => _unitsInStock;
 
-            set => _stock = (value < 0)
+            set => _unitsInStock = (value < 0)
                 ? throw new StockCannotBeNegativeException()
                 : value;
         }
+        public int? CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
