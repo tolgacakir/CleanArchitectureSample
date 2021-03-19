@@ -33,7 +33,7 @@ namespace Sample.Application.AppUsers.Queries.LoginAppUser
                 throw new EntityNotFoundException("Username or Password is wrong.");
             }
 
-            var token = _tokenService.CreateAccessToken(1);
+            var token = _tokenService.CreateAccessToken(30);
             return new LoginAppUserResponse
             {
                 Token = token
