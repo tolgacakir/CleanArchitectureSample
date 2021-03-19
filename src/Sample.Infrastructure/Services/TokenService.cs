@@ -15,7 +15,7 @@ namespace Sample.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        public Token CreateAccessToken(int expires)
+        public Token CreateAccessToken(int durationInSeconds)
         {
             Token token = new Token();
 
@@ -30,7 +30,7 @@ namespace Sample.Infrastructure.Services
             //Kimlik
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            token.Expiration = DateTime.Now.AddMinutes(expires);
+            token.Expiration = DateTime.Now.AddSeconds(durationInSeconds);
 
             //JWT Konfigürasyonu
             JwtSecurityToken securityToken = new JwtSecurityToken(
