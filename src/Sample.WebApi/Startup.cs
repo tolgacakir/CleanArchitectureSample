@@ -11,6 +11,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sample.Persistence;
+using Sample.Infrastructure;
+using Sample.Application;
+using FluentValidation.AspNetCore;
+using Sample.Application.Validation.Category;
+using Sample.Infrastructure.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Sample.WebApi
 {
@@ -26,8 +35,34 @@ namespace Sample.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddInfrastructureLayer();
+            services.AddPersistenceLayer(Configuration);
+            services.AddApplicationLayer();
 
-            services.AddControllers();
+            services.AddControllers(options=> {
+                options.Filters.Add<ValidationFilter>();
+                options.Filters.Add<CustomExceptionFilter>();
+                //options.Filters.Add < .... > ();
+            }).AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateCategoryRequestValidator>())
+            .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    //Token doðrulama kurallarý bu nesneyle belirtilir.
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = Configuration["JWT:Audience"],
+                        ValidIssuer = Configuration["JWT:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecurityKey"])),
+                        LifetimeValidator = (notBefore, expires, tokenToValidate, tokenValidationParameters) => expires != null ? expires > DateTime.UtcNow : false
+                    };
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample.WebApi", Version = "v1" });
@@ -48,6 +83,7 @@ namespace Sample.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
