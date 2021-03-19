@@ -13,6 +13,7 @@ namespace Sample.Infrastructure
     {
         public static void AddInfrastructureLayer(this IServiceCollection services)
         {
+            services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IDateTimeService, DateTimeService>();
         }
     }
