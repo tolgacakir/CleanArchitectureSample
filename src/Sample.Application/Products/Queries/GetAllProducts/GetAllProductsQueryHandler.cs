@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Sample.Application.Common.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,26 +11,23 @@ using System.Threading.Tasks;
 
 namespace Sample.Application.Products.Queries.GetAllProducts
 {
-    public class GetAllProductsQueryHandler
+    public class GetAllProductsQueryHandler :IRequestHandler<GetAllProductsRequest,List<GetAllProductsResponse>>
     {
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GetAllProductsQueryHandler(IApplicationDbContext context)
+        public GetAllProductsQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<List<GetAllProductsResponse>> GetAllProducts(GetAllProductsRequest request, CancellationToken cancellationToken)
+        public async Task<List<GetAllProductsResponse>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
         {
-            var response = await _context.Products
-                .Select(p => new GetAllProductsResponse
-                {
-                    Name = p.Name,
-                    Price = p.UnitPrice,
-                })
+            var products = await _context.Products
                 .Take(100)
                 .ToListAsync();
-            return response;
+            return _mapper.Map<List<GetAllProductsResponse>>(products);
         }
     }
 }
