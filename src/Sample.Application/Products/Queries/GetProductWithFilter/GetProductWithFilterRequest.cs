@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sample.Application.Products.Queries.GetProductWithFilter
 {
-    public class GetProductWithFilterRequest
+    public class GetProductWithFilterRequest : IRequest<List<GetProductWithFilterResponse>>
     {
         public int CategoryId { get; set; }
         public string Word { get; set; }
