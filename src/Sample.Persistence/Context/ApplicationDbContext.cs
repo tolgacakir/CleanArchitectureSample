@@ -16,6 +16,7 @@ namespace Sample.Persistence.Context
     {
         private readonly IDateTimeService _dateTimeService;
 
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
@@ -26,8 +27,14 @@ namespace Sample.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration()); //alternative: builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser { DisplayName = "Tolga Çakır", UserName = "tolgacakir", Password = "123", Email = "tolgacakirx@gmail.com", Created = DateTime.Now, CreatedBy = "admin", Id = 1 },
+                new AppUser { DisplayName = "USER 2", UserName = "user2", Password = "123", Email = "user2@gmail.com", Created = DateTime.Now, CreatedBy = "admin", Id = 2 });
+
             base.OnModelCreating(modelBuilder);
         }
 
