@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Sample.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
+        
         public Token CreateAccessToken(int durationInSeconds)
         {
             Token token = new Token();
@@ -37,7 +39,7 @@ namespace Sample.Infrastructure.Services
                 issuer: configuration["JWT:Issuer"],
                 audience: configuration["JWT:Audience"],
                 expires: token.Expiration,
-                notBefore: DateTime.Now, //Token üretildikten ne kadar süre sonra devreye girsin ayarlıyoruz.
+                notBefore: DateTime.Now, //Token üretildikten ne kadar süre sonra devreye girsin
                 signingCredentials: signingCredentials,
                 claims: new List<Claim> {
                     new(ClaimTypes.Role, "misafir"),
@@ -53,12 +55,26 @@ namespace Sample.Infrastructure.Services
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
 
+
             return token;
         }
 
         public string CreateRefreshToken()
         {
-            throw new NotImplementedException();
+            byte[] numbers = new byte[32];
+            RandomNumberGenerator generator = RandomNumberGenerator.Create();
+            generator.GetBytes(numbers);
+            return Convert.ToBase64String(numbers);
+        }
+
+        public Token GetEmptyToken()
+        {
+            return new Token
+            {
+                AccessToken = "",
+                Expiration = DateTime.Now,
+                RefreshToken = "",
+            };
         }
     }
 }
