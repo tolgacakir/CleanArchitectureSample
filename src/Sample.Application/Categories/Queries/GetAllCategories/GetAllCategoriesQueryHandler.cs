@@ -30,15 +30,5 @@ namespace Sample.Application.Categories.Queries.GetAllCategories
 
             return _mapper.Map<List<GetAllCategoriesResponse>>(products);
         }
-
-
-        //public async Task<IEnumerable<GetAllCategoriesResponse>> Handle(GetAllCategoriesRequest request, CancellationToken cancellationToken)
-        //{
-        //    var products = await _context.Categories
-        //        .Take(100)
-        //        .ToListAsync();
-
-        //    return _mapper.Map<IEnumerable<GetAllCategoriesResponse>>(products);
-        //}
     }
 }

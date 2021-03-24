@@ -21,15 +21,6 @@ namespace Sample.Application.Categories.Commands.CreateCategory
             _mapper = mapper;
         }
 
-        //public async Task<int> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
-        //{
-        //    var category = _mapper.Map<Category>(request);
-
-        //    await _context.Categories.AddAsync(category);
-        //    var result = await _context.SaveChangesAsync(cancellationToken);
-        //    return result;
-        //}
-
         public async Task<CreateCategoryResponse> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
         {
             var category = _mapper.Map<Category>(request);

@@ -16,7 +16,6 @@ namespace Sample.Infrastructure.Services
 {
     public class TokenService : ITokenService
     {
-        
         public Token CreateAccessToken(int durationInSeconds)
         {
             Token token = new Token();
@@ -54,8 +53,7 @@ namespace Sample.Infrastructure.Services
             //Token oluşturucu
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
-
-
+            
             return token;
         }
 
