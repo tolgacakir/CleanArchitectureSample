@@ -9,7 +9,8 @@ namespace Sample.Application.Common.Interfaces
 {
     public interface ITokenService
     {
-        Token CreateAccessToken(int expires);
+        Token GetEmptyToken();
+        Token CreateAccessToken(int durationInSeconds);
         string CreateRefreshToken();
     }
 }
