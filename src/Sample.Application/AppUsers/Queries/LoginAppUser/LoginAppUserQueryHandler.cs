@@ -34,6 +34,13 @@ namespace Sample.Application.AppUsers.Queries.LoginAppUser
             }
 
             var token = _tokenService.CreateAccessToken(30);
+            token.RefreshToken = _tokenService.CreateRefreshToken();
+
+            user.RefreshToken = token.RefreshToken;
+            user.RefreshTokenEndDate = token.Expiration.AddSeconds(15);
+
+            await _context.SaveChangesAsync(new CancellationToken());
+
             return new LoginAppUserResponse
             {
                 Token = token
