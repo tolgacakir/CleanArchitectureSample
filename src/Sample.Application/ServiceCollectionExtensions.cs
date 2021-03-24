@@ -17,9 +17,6 @@ namespace Sample.Application
     {
         public static void AddApplicationLayer(this IServiceCollection services)
         {
-            services.AddTransient<GetAllCategoriesQueryHandler>();
-            services.AddTransient<CreateCategoryCommandHandler>();
-            services.AddTransient<LoginAppUserQueryHandler>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
         }
