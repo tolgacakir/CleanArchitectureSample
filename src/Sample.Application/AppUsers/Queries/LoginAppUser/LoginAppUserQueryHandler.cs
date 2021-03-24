@@ -33,11 +33,11 @@ namespace Sample.Application.AppUsers.Queries.LoginAppUser
                 throw new EntityNotFoundException("Username or Password is wrong.");
             }
 
-            var token = _tokenService.CreateAccessToken(30);
+            var token = _tokenService.CreateAccessToken(60);
             token.RefreshToken = _tokenService.CreateRefreshToken();
 
             user.RefreshToken = token.RefreshToken;
-            user.RefreshTokenEndDate = token.Expiration.AddSeconds(15);
+            user.RefreshTokenEndDate = token.Expiration.AddSeconds(30);
 
             await _context.SaveChangesAsync(new CancellationToken());
 
