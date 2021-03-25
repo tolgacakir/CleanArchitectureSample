@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Sample.Application.Common.Interfaces;
 using Sample.Domain.Common;
 using Sample.Domain.Entities;
@@ -57,6 +58,11 @@ namespace Sample.Persistence.Context
                 }
             }
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await Database.BeginTransactionAsync();
         }
     }
 }
