@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Sample.Domain\Sample.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Products\Commands\" />
-  </ItemGroup>
-
 </Project>
