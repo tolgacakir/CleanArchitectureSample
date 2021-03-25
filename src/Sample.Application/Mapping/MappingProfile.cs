@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sample.Application.Categories.Commands.CreateCategory;
 using Sample.Application.Categories.Queries.GetAllCategories;
+using Sample.Application.Products.Commands.CreateProductWithCategory;
 using Sample.Application.Products.Queries.GetAllProducts;
 using Sample.Application.Products.Queries.GetProductWithFilter;
 using Sample.Domain.Entities;
@@ -34,6 +35,21 @@ namespace Sample.Application.Mapping
             CreateMap<Category, GetAllCategoriesRequest>()
                 .ReverseMap();
             CreateMap<Category, GetAllCategoriesResponse>()
+                .ReverseMap();
+
+
+            CreateMap<Product, CreateProductWithCategoryRequest>()
+                .ForMember(req => req.ProductName, p=> p.MapFrom(r => r.Name))
+                .ReverseMap();
+            
+            CreateMap<Category, CreateProductWithCategoryRequest>()
+                .ForMember(req => req.CategoryName, p => p.MapFrom(r => r.Name))
+                .ReverseMap();
+
+            CreateMap<Product, CreateProductWithCategoryResponse>()
+                .ForMember(p => p.ProductName, resp => resp.MapFrom(r => r.Name))
+                .ForMember(p => p.CategoryName, resp => resp.MapFrom(r => r.Category.Name))
+                .ForMember(p => p.UnitPrice, resp => resp.MapFrom(r => r.UnitPrice))
                 .ReverseMap();
 
         }
