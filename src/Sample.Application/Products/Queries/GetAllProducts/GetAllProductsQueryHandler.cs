@@ -25,7 +25,9 @@ namespace Sample.Application.Products.Queries.GetAllProducts
         public async Task<List<GetAllProductsResponse>> Handle(GetAllProductsRequest request, CancellationToken cancellationToken)
         {
             var products = await _context.Products
+                .OrderBy(p=>p.Created)
                 .Take(100)
+                .Include(p=>p.Category)
                 .ToListAsync();
             return _mapper.Map<List<GetAllProductsResponse>>(products);
         }
