@@ -15,19 +15,16 @@ namespace Sample.Persistence
     {
         public static void AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            //if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-            //{
-            //    services.AddDbContext<ApplicationDbContext>(options =>
-            //        options.UseInMemoryDatabase("SampleInMemoryDB"));
-            //}
-            //else
-            //{
-            //    services.AddDbContext<ApplicationDbContext>(options =>
-            //        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-            //}
-
-            services.AddDbContext<ApplicationDbContext>(options =>
+            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase("SampleInMemoryDB"));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            }
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
         }
     }
