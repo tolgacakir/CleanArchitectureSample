@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Sample.Domain.Entities
 {
-    public class Product : AuditableEntity<Guid>
+    public class Product : AuditableEntity
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public uint QuantityPerUnit { get; set; }
 

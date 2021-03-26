@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sample.Domain.Common
 {
-    public abstract class AuditableEntity<TPrimaryKey> : Entity<TPrimaryKey>
+    public abstract class AuditableEntity : Entity
     {
         public DateTime Created { get; set; }
         public string CreatedBy { get; set; }

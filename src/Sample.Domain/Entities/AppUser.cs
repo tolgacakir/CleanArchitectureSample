@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Sample.Domain.Entities
 {
-    public class AppUser : AuditableEntity<int>
+    public class AppUser : AuditableEntity
     {
+        public int Id { get; set; }
         public string DisplayName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }

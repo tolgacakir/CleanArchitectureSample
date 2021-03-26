@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sample.Domain.Common
 {
-    public abstract class Entity<TPrimaryKey>
+    public abstract class Entity
     {
-        public TPrimaryKey Id { get; set; }
     }
 }
