@@ -28,9 +28,7 @@ namespace Sample.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration()); //alternative: builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppUserConfiguration).Assembly);
 
             modelBuilder.Entity<AppUser>().HasData(
                 new AppUser { DisplayName = "Tolga Çakır", UserName = "tolgacakir", Password = "123", Email = "tolgacakirx@gmail.com", Created = DateTime.Now, CreatedBy = "admin", Id = 1 },
@@ -41,7 +39,7 @@ namespace Sample.Persistence.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity<object>>())
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity<object>>()) //TODO: @ApplicationDbContext, bug! guid geldiğinde foreach'e girilmiyor!
             {
                 switch (entry.State)
                 {
