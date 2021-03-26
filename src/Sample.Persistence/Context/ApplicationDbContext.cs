@@ -39,7 +39,7 @@ namespace Sample.Persistence.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity<object>>()) //TODO: @ApplicationDbContext, bug! guid geldiğinde foreach'e girilmiyor!
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entry.State)
                 {
