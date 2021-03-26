@@ -32,6 +32,17 @@ namespace Sample.Domain.Entities
                 : value;
         }
         public int? CategoryId { get; set; }
-        public Category Category { get; set; }
+
+        private Category _category;
+        public Category Category 
+        {
+            get => _category;
+            set
+            {
+                CategoryId = value?.Id;
+                _category = value;
+            }
+            
+        }
     }
 }
