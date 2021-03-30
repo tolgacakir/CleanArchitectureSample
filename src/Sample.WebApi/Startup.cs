@@ -41,6 +41,7 @@ namespace Sample.WebApi
             services.AddApplicationLayer();
 
             services.AddControllers(options=> {
+                options.ReturnHttpNotAcceptable = true;
                 options.Filters.Add<ValidationFilter>();
                 options.Filters.Add<CustomExceptionFilter>();
                 //options.Filters.Add < .... > ();
