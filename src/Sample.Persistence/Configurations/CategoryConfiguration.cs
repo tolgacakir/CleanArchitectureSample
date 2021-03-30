@@ -18,6 +18,8 @@ namespace Sample.Persistence.Configurations
             builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(20);
+
+            builder.HasQueryFilter(p => p.IsDeleted == false);
         }
     }
 }
