@@ -45,8 +45,10 @@ namespace Sample.WebApi
                 options.Filters.Add<ValidationFilter>();
                 options.Filters.Add<CustomExceptionFilter>();
                 //options.Filters.Add < .... > ();
-            }).AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateCategoryRequestValidator>()) //bu validatorun bulunduðu assembly'deki tüm validatorler register ediliyor
-            .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
+            })
+                .AddXmlSerializerFormatters()
+                .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateCategoryRequestValidator>()) //bu validatorun bulunduðu assembly'deki tüm validatorler register ediliyor
+                .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
