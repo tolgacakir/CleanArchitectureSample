@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Application.Categories.Commands.CreateCategory;
+using Sample.Application.Categories.Commands.DeleteCategory;
 using Sample.Application.Categories.Queries.GetAllCategories;
 using Sample.Application.Common.Interfaces;
 using System;
@@ -34,6 +35,12 @@ namespace Sample.WebApi.Controllers
         public async Task<IEnumerable<GetAllCategoriesResponse>> GetAll()
         {
             return await _mediator.Send(new GetAllCategoriesRequest());
+        }
+
+        [HttpPost]
+        public async Task<DeleteCategoryResponse> Delete([FromBody] DeleteCategoryRequest request)
+        {
+            return await _mediator.Send(request);
         }
     }
 }
