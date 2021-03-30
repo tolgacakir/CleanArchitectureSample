@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sample.Application.Categories.Commands.CreateCategory;
+using Sample.Application.Categories.Commands.DeleteCategory;
 using Sample.Application.Categories.Queries.GetAllCategories;
 using Sample.Application.Products.Commands.CreateProduct;
 using Sample.Application.Products.Commands.CreateProductWithCategory;
@@ -36,6 +37,8 @@ namespace Sample.Application.Mapping
                 .ForMember(req => req.CategoryName, p => p.MapFrom(r => r.Name))
                 .ReverseMap();
 
+            CreateMap<Category, DeleteCategoryResponse>()
+                .ReverseMap();
             
         }
     }
