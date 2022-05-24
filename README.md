@@ -1,5 +1,6 @@
 # CleanArchitectureSample
 
+Note: There is a [non-anemic](https://martinfowler.com/bliki/AnemicDomainModel.html) and better code [here](https://github.com/tolgacakir/ride-share-clean-architecture-sample)
 
 ## The sample project of [clean architecture](https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures#clean-architecture).
 
